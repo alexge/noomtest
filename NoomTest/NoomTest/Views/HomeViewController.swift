@@ -52,6 +52,6 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        print("update")
+        AFConsumer().search("duck")
     }
 }
