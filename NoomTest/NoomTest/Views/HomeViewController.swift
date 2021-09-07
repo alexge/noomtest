@@ -61,6 +61,7 @@ extension HomeViewController: UISearchResultsUpdating {
             self?.afConsumer.search(text) { result in
                 switch result {
                 case .success(let result):
+                    guard result.searchTerm == text else { return }
                     self?.listViewController.list = result.results
                 case .failure(let error):
                     print(error)

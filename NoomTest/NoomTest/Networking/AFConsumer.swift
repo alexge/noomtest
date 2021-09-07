@@ -18,9 +18,9 @@ protocol SearchRequestPerformerProtocol {
 }
 
 enum SearchError: Error {
-    case tooShort
-    case any
-    case decode
+    case tooShort(String)
+    case any(String)
+    case decode(String)
 }
 
 class AFConsumer {
@@ -30,7 +30,7 @@ class AFConsumer {
             switch response.result {
             case .success(let data):
                 guard let status = response.response?.statusCode, let data = data else {
-                    completion(.failure(.any))
+                    completion(.failure(.any(searchTerm)))
                     return
                 }
                 
@@ -40,19 +40,19 @@ class AFConsumer {
                         let searchResult = SearchResult(searchTerm: searchTerm, results: results)
                         completion(.success(searchResult))
                     } catch {
-                        completion(.failure(.decode))
+                        completion(.failure(.decode(searchTerm)))
                     }
                 } else {
                     if status == 400, let message = try? JSONDecoder().decode(String.self, from: data) {
                         if message.contains("must be at least three characters") {
-                            completion(.failure(.tooShort))
+                            completion(.failure(.tooShort(searchTerm)))
                         }
                     } else {
-                        completion(.failure(.any))
+                        completion(.failure(.any(searchTerm)))
                     }
                 }
             case .failure:
-                completion(.failure(.any))
+                completion(.failure(.any(searchTerm)))
             }
         }
     }
