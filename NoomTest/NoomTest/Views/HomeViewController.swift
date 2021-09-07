@@ -11,7 +11,6 @@ class HomeViewController: UIViewController {
     
     private let afConsumer = AFConsumer()
     
-    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -54,10 +53,17 @@ class HomeViewController: UIViewController {
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         searchTimer?.invalidate()
-        guard searchController.searchBar.text?.isEmpty != true else { return }
+        guard let text = searchController.searchBar.text, text.isEmpty != true else { return }
         
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { [weak self] timer in
-            self?.afConsumer.search("duck")
+            self?.afConsumer.search(text) { result in
+                switch result {
+                case .success(let result):
+                    print(result)
+                case .failure(let error):
+                    print(error)
+                }
+            }
         }
     }
 }

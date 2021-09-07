@@ -8,34 +8,51 @@
 import Alamofire
 import Foundation
 
+struct SearchResult {
+    let searchTerm: String
+    let results: [Food]
+}
+
+protocol SearchRequestPerformerProtocol {
+    func search(_ searchTerm: String, completion: (Result<SearchResult, Error>) -> Void)
+}
+
+enum SearchError: Error {
+    case tooShort
+    case any
+    case decode
+}
+
 class AFConsumer {
-    func search(_ searchTerm: String) {
+    func search(_ searchTerm: String, completion: @escaping (Result<SearchResult, SearchError>) -> Void) {
         let request = AF.request("https://uih0b7slze.execute-api.us-east-1.amazonaws.com/dev/search", method: .get, parameters: ["kv": searchTerm])
         request.response { response in
             switch response.result {
             case .success(let data):
                 guard let status = response.response?.statusCode, let data = data else {
-                    print("Something went wrong")
+                    completion(.failure(.any))
                     return
                 }
                 
                 if 200..<300 ~= status {
                     do {
                         let results = try JSONDecoder().decode([Food].self, from: data)
-                        print(results)
+                        let searchResult = SearchResult(searchTerm: searchTerm, results: results)
+                        completion(.success(searchResult))
                     } catch {
-                        print(error.localizedDescription)
+                        completion(.failure(.decode))
                     }
                 } else {
-                    if status == 400 {
-                        let message = try? JSONDecoder().decode(String.self, from: data)
-                        print(message)
+                    if status == 400, let message = try? JSONDecoder().decode(String.self, from: data) {
+                        if message.contains("must be at least three characters") {
+                            completion(.failure(.tooShort))
+                        }
                     } else {
-                        print("Something went wrong")
+                        completion(.failure(.any))
                     }
                 }
-            case .failure(let error):
-                print(error.localizedDescription)
+            case .failure:
+                completion(.failure(.any))
             }
         }
     }
