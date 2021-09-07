@@ -21,8 +21,8 @@ class RootNavigationCoordinator: UIViewController {
     }
     
     private func showSearchList() {
-        let searchList = HomeViewController()
-        let navigationController = UINavigationController(rootViewController: searchList)
+        let home = HomeViewController()
+        let navigationController = UINavigationController(rootViewController: home)
         show(child: navigationController)
     }
     

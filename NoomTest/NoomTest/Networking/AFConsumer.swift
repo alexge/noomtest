@@ -14,7 +14,7 @@ struct SearchResult {
 }
 
 protocol SearchRequestPerformerProtocol {
-    func search(_ searchTerm: String, completion: (Result<SearchResult, Error>) -> Void)
+    func search(_ searchTerm: String, completion: @escaping (Result<SearchResult, SearchError>) -> Void)
 }
 
 enum SearchError: Error {
@@ -23,7 +23,7 @@ enum SearchError: Error {
     case decode(String)
 }
 
-class AFConsumer {
+class AFConsumer: SearchRequestPerformerProtocol {
     func search(_ searchTerm: String, completion: @escaping (Result<SearchResult, SearchError>) -> Void) {
         let request = AF.request("https://uih0b7slze.execute-api.us-east-1.amazonaws.com/dev/search", method: .get, parameters: ["kv": searchTerm])
         request.response { response in

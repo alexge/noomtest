@@ -9,7 +9,7 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
-    private let afConsumer = AFConsumer()
+    private let searchRequestPerformer: SearchRequestPerformerProtocol
     
     private let welcomeLabel: UILabel = {
         let label = UILabel()
@@ -34,7 +34,16 @@ class HomeViewController: UIViewController {
     private var listViewController = ListViewController()
     
     private var searchTimer: Timer?
-
+    
+    init(requestPerformer: SearchRequestPerformerProtocol = AFConsumer()) {
+        searchRequestPerformer = requestPerformer
+        super.init(nibName: nil, bundle: nil)
+    }
+    
+    required init?(coder: NSCoder) {
+        fatalError("init(coder:) has not been implemented")
+    }
+    
     override func viewDidLoad() {
         super.viewDidLoad()
         // Do any additional setup after loading the view.
@@ -57,8 +66,8 @@ extension HomeViewController: UISearchResultsUpdating {
         searchTimer?.invalidate()
         guard let text = searchController.searchBar.text, text.isEmpty != true else { return }
         
-        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { [weak self] timer in
-            self?.afConsumer.search(text) { result in
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] timer in
+            self?.searchRequestPerformer.search(text) { result in
                 switch result {
                 case .success(let result):
                     guard result.searchTerm == text else { return }
