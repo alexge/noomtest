@@ -35,6 +35,8 @@ class HomeViewController: UIViewController {
     
     private var searchTimer: Timer?
     
+    private var lastDisplayedSearch: String = ""
+    
     init(requestPerformer: SearchRequestPerformerProtocol = AFConsumer()) {
         searchRequestPerformer = requestPerformer
         super.init(nibName: nil, bundle: nil)
@@ -64,19 +66,51 @@ extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
         listViewController.list = []
         searchTimer?.invalidate()
-        guard let text = searchController.searchBar.text, text.isEmpty != true else { return }
+        guard let text = searchController.searchBar.text, text.isEmpty != true, text != lastDisplayedSearch else { return }
         
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] timer in
             self?.searchRequestPerformer.search(text) { result in
+                guard let currentText = searchController.searchBar.text else { return }
                 switch result {
                 case .success(let result):
-                    guard result.searchTerm == text else { return }
+                    guard result.searchTerm == currentText else { return }
                     self?.listViewController.list = result.results
+                    self?.lastDisplayedSearch = result.searchTerm
                 case .failure(let error):
-                    print(error)
+                    switch error {
+                    case .any(let term):
+                        guard term == currentText else { return }
+                        self?.showError(error)
+                        self?.lastDisplayedSearch = term
+                    case .decode(let term):
+                        guard term == currentText else { return }
+                        self?.showError(error)
+                        self?.lastDisplayedSearch = term
+                    case .tooShort(let term):
+                        guard term == currentText else { return }
+                        self?.showError(error)
+                        self?.lastDisplayedSearch = term
+                    }
                     self?.listViewController.list = []
                 }
             }
         }
+    }
+    
+    private func showError(_ error: SearchError) {
+        let message = UIAlertController(title: nil, message: nil, preferredStyle: .alert)
+        switch error {
+        case .tooShort:
+            message.title = NSLocalizedString("Too short!", comment: "")
+            message.message = NSLocalizedString("Search term must be at least 3 characters", comment: "")
+        case .any, .decode:
+            message.title = NSLocalizedString("UH OH", comment: "")
+            message.message = NSLocalizedString("Something went WRONG", comment: "")
+        }
+        let action = UIAlertAction(title: NSLocalizedString("Close", comment: ""), style: .default) { [weak self] _ in
+            self?.dismiss(animated: true, completion: nil)
+        }
+        message.addAction(action)
+        present(message, animated: true, completion: nil)
     }
 }
