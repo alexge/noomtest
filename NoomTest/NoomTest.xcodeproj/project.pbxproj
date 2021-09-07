@@ -9,19 +9,21 @@
 /* Begin PBXBuildFile section */
 		C11170AD26E664B200316D0D /* AppDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170AC26E664B200316D0D /* AppDelegate.swift */; };
 		C11170AF26E664B200316D0D /* SceneDelegate.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170AE26E664B200316D0D /* SceneDelegate.swift */; };
-		C11170B126E664B200316D0D /* ViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170B026E664B200316D0D /* ViewController.swift */; };
+		C11170B126E664B200316D0D /* HomeViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170B026E664B200316D0D /* HomeViewController.swift */; };
 		C11170B626E664B300316D0D /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = C11170B526E664B300316D0D /* Assets.xcassets */; };
 		C11170B926E664B300316D0D /* LaunchScreen.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11170B726E664B300316D0D /* LaunchScreen.storyboard */; };
+		C11170C126E6A99000316D0D /* RootNavigationCoordinator.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170C026E6A99000316D0D /* RootNavigationCoordinator.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
 		C11170A926E664B200316D0D /* NoomTest.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = NoomTest.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		C11170AC26E664B200316D0D /* AppDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AppDelegate.swift; sourceTree = "<group>"; };
 		C11170AE26E664B200316D0D /* SceneDelegate.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SceneDelegate.swift; sourceTree = "<group>"; };
-		C11170B026E664B200316D0D /* ViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ViewController.swift; sourceTree = "<group>"; };
+		C11170B026E664B200316D0D /* HomeViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HomeViewController.swift; sourceTree = "<group>"; };
 		C11170B526E664B300316D0D /* Assets.xcassets */ = {isa = PBXFileReference; lastKnownFileType = folder.assetcatalog; path = Assets.xcassets; sourceTree = "<group>"; };
 		C11170B826E664B300316D0D /* Base */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; name = Base; path = Base.lproj/LaunchScreen.storyboard; sourceTree = "<group>"; };
 		C11170BA26E664B300316D0D /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
+		C11170C026E6A99000316D0D /* RootNavigationCoordinator.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = RootNavigationCoordinator.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -56,7 +58,8 @@
 			children = (
 				C11170AC26E664B200316D0D /* AppDelegate.swift */,
 				C11170AE26E664B200316D0D /* SceneDelegate.swift */,
-				C11170B026E664B200316D0D /* ViewController.swift */,
+				C11170C026E6A99000316D0D /* RootNavigationCoordinator.swift */,
+				C11170B026E664B200316D0D /* HomeViewController.swift */,
 				C11170B526E664B300316D0D /* Assets.xcassets */,
 				C11170B726E664B300316D0D /* LaunchScreen.storyboard */,
 				C11170BA26E664B300316D0D /* Info.plist */,
@@ -133,8 +136,9 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
-				C11170B126E664B200316D0D /* ViewController.swift in Sources */,
+				C11170B126E664B200316D0D /* HomeViewController.swift in Sources */,
 				C11170AD26E664B200316D0D /* AppDelegate.swift in Sources */,
+				C11170C126E6A99000316D0D /* RootNavigationCoordinator.swift in Sources */,
 				C11170AF26E664B200316D0D /* SceneDelegate.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
