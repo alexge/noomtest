@@ -20,8 +20,7 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var searchController: UISearchController = {
-        let resultsView = UIViewController()
-        resultsView.view.backgroundColor = .blue
+        let resultsView = ListViewController()
         let search = UISearchController(searchResultsController: resultsView)
         search.searchResultsUpdater = self
         search.obscuresBackgroundDuringPresentation = false
