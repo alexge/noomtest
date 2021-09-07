@@ -22,8 +22,7 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var searchController: UISearchController = {
-        let resultsView = ListViewController()
-        let search = UISearchController(searchResultsController: resultsView)
+        let search = UISearchController(searchResultsController: listViewController)
         search.searchResultsUpdater = self
         search.obscuresBackgroundDuringPresentation = false
         search.automaticallyShowsSearchResultsController = true
@@ -31,6 +30,8 @@ class HomeViewController: UIViewController {
         
         return search
     }()
+    
+    private var listViewController = ListViewController()
     
     private var searchTimer: Timer?
 
@@ -52,6 +53,7 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
+        listViewController.list = []
         searchTimer?.invalidate()
         guard let text = searchController.searchBar.text, text.isEmpty != true else { return }
         
@@ -59,9 +61,10 @@ extension HomeViewController: UISearchResultsUpdating {
             self?.afConsumer.search(text) { result in
                 switch result {
                 case .success(let result):
-                    print(result)
+                    self?.listViewController.list = result.results
                 case .failure(let error):
                     print(error)
+                    self?.listViewController.list = []
                 }
             }
         }

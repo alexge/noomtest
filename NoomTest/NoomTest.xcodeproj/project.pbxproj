@@ -17,6 +17,7 @@
 		C11170C826E79C0D00316D0D /* Alamofire in Frameworks */ = {isa = PBXBuildFile; productRef = C11170C726E79C0D00316D0D /* Alamofire */; };
 		C11170CB26E79E4200316D0D /* Food.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170CA26E79E4200316D0D /* Food.swift */; };
 		C11170CD26E79EDC00316D0D /* AFConsumer.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170CC26E79EDC00316D0D /* AFConsumer.swift */; };
+		C11170CF26E7D68A00316D0D /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170CE26E7D68A00316D0D /* FoodTableViewCell.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -31,6 +32,7 @@
 		C11170C226E77C5E00316D0D /* ListViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ListViewController.swift; sourceTree = "<group>"; };
 		C11170CA26E79E4200316D0D /* Food.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Food.swift; sourceTree = "<group>"; };
 		C11170CC26E79EDC00316D0D /* AFConsumer.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = AFConsumer.swift; sourceTree = "<group>"; };
+		C11170CE26E7D68A00316D0D /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -82,6 +84,7 @@
 			children = (
 				C11170B026E664B200316D0D /* HomeViewController.swift */,
 				C11170C226E77C5E00316D0D /* ListViewController.swift */,
+				C11170CE26E7D68A00316D0D /* FoodTableViewCell.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -182,6 +185,7 @@
 				C11170AD26E664B200316D0D /* AppDelegate.swift in Sources */,
 				C11170C126E6A99000316D0D /* RootNavigationCoordinator.swift in Sources */,
 				C11170C326E77C5E00316D0D /* ListViewController.swift in Sources */,
+				C11170CF26E7D68A00316D0D /* FoodTableViewCell.swift in Sources */,
 				C11170AF26E664B200316D0D /* SceneDelegate.swift in Sources */,
 				C11170CB26E79E4200316D0D /* Food.swift in Sources */,
 			);

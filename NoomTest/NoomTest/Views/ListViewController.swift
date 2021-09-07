@@ -9,11 +9,18 @@ import UIKit
 
 class ListViewController: UIViewController {
     
+    var list: [Food] = [] {
+        didSet {
+            tableView.reloadData()
+        }
+    }
+    
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
         tableView.translatesAutoresizingMaskIntoConstraints = false
         tableView.dataSource = self
         tableView.delegate = self
+        tableView.register(FoodTableViewCell.self, forCellReuseIdentifier: FoodTableViewCell.identifier)
         return tableView
     }()
     
@@ -36,16 +43,20 @@ extension ListViewController: UITableViewDelegate {
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {
-        return 50
+        return 100
     }
 }
 
 extension ListViewController: UITableViewDataSource {
     func tableView(_ tableView: UITableView, numberOfRowsInSection section: Int) -> Int {
-        return 20
+        list.count
     }
     
     func tableView(_ tableView: UITableView, cellForRowAt indexPath: IndexPath) -> UITableViewCell {
-        return UITableViewCell()
+        guard let cell = tableView.dequeueReusableCell(withIdentifier: FoodTableViewCell.identifier) as? FoodTableViewCell else {
+            return UITableViewCell()
+        }
+        cell.bind(list[indexPath.row])
+        return cell
     }
 }
