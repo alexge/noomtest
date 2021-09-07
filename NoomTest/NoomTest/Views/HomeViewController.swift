@@ -9,6 +9,9 @@ import UIKit
 
 class HomeViewController: UIViewController {
     
+    private let afConsumer = AFConsumer()
+    
+    
     private let welcomeLabel: UILabel = {
         let label = UILabel()
         label.translatesAutoresizingMaskIntoConstraints = false
@@ -29,6 +32,8 @@ class HomeViewController: UIViewController {
         
         return search
     }()
+    
+    private var searchTimer: Timer?
 
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -43,15 +48,16 @@ class HomeViewController: UIViewController {
             welcomeLabel.centerXAnchor.constraint(equalTo: view.centerXAnchor),
             welcomeLabel.leadingAnchor.constraint(equalTo: view.leadingAnchor, constant: 32)
         ])
-        
-    
     }
-
-
 }
 
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        AFConsumer().search("duck")
+        searchTimer?.invalidate()
+        guard searchController.searchBar.text?.isEmpty != true else { return }
+        
+        searchTimer = Timer.scheduledTimer(withTimeInterval: 0.7, repeats: false) { [weak self] timer in
+            self?.afConsumer.search("duck")
+        }
     }
 }
