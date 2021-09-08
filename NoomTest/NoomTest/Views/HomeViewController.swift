@@ -69,29 +69,37 @@ extension HomeViewController: UISearchResultsUpdating {
         guard let text = searchController.searchBar.text, text.isEmpty != true, text != lastDisplayedSearch else { return }
         
         searchTimer = Timer.scheduledTimer(withTimeInterval: 0.5, repeats: false) { [weak self] timer in
-            self?.searchRequestPerformer.search(text) { result in
-                guard let currentText = searchController.searchBar.text else { return }
-                switch result {
-                case .success(let result):
-                    guard result.searchTerm == currentText else { return }
-                    self?.listViewController.list = result.results
-                    self?.lastDisplayedSearch = result.searchTerm
-                case .failure(let error):
-                    switch error {
-                    case .any(let term):
-                        guard term == currentText else { return }
-                        self?.showError(error)
-                        self?.lastDisplayedSearch = term
-                    case .decode(let term):
-                        guard term == currentText else { return }
-                        self?.showError(error)
-                        self?.lastDisplayedSearch = term
-                    case .tooShort(let term):
-                        guard term == currentText else { return }
-                        self?.showError(error)
-                        self?.lastDisplayedSearch = term
+            self?.search(text)
+        }
+    }
+    
+    private func search(_ searchTerm: String) {
+        DispatchQueue.global().async { [weak self] in
+            self?.searchRequestPerformer.search(searchTerm) { result in
+                DispatchQueue.main.async {
+                    guard let currentText = self?.searchController.searchBar.text else { return }
+                    switch result {
+                    case .success(let result):
+                        guard result.searchTerm == currentText else { return }
+                        self?.listViewController.list = result.results
+                        self?.lastDisplayedSearch = result.searchTerm
+                    case .failure(let error):
+                        switch error {
+                        case .any(let term):
+                            guard term == currentText else { return }
+                            self?.showError(error)
+                            self?.lastDisplayedSearch = term
+                        case .decode(let term):
+                            guard term == currentText else { return }
+                            self?.showError(error)
+                            self?.lastDisplayedSearch = term
+                        case .tooShort(let term):
+                            guard term == currentText else { return }
+                            self?.showError(error)
+                            self?.lastDisplayedSearch = term
+                        }
+                        self?.listViewController.list = []
                     }
-                    self?.listViewController.list = []
                 }
             }
         }
