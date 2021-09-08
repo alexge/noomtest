@@ -10,49 +10,46 @@ import Foundation
 
 struct SearchResult {
     let searchTerm: String
-    let results: [Food]
+    let result: Result<[Food], SearchError>
 }
 
 protocol SearchRequestPerformerProtocol {
-    func search(_ searchTerm: String, completion: @escaping (Result<SearchResult, SearchError>) -> Void)
+    func search(_ searchTerm: String, completion: @escaping (SearchResult) -> Void)
 }
 
 enum SearchError: Error {
-    case tooShort(String)
-    case any(String)
-    case decode(String)
+    case tooShort, any, decode
 }
 
 class AFConsumer: SearchRequestPerformerProtocol {
-    func search(_ searchTerm: String, completion: @escaping (Result<SearchResult, SearchError>) -> Void) {
+    func search(_ searchTerm: String, completion: @escaping (SearchResult) -> Void) {
         let request = AF.request("https://uih0b7slze.execute-api.us-east-1.amazonaws.com/dev/search", method: .get, parameters: ["kv": searchTerm])
         request.response { response in
             switch response.result {
             case .success(let data):
                 guard let status = response.response?.statusCode, let data = data else {
-                    completion(.failure(.any(searchTerm)))
+                    completion(SearchResult(searchTerm: searchTerm, result: .failure(.any)))
                     return
                 }
                 
                 if 200..<300 ~= status {
                     do {
                         let results = try JSONDecoder().decode([Food].self, from: data)
-                        let searchResult = SearchResult(searchTerm: searchTerm, results: results)
-                        completion(.success(searchResult))
+                        completion(SearchResult(searchTerm: searchTerm, result: .success(results)))
                     } catch {
-                        completion(.failure(.decode(searchTerm)))
+                        completion(SearchResult(searchTerm: searchTerm, result: .failure(.decode)))
                     }
                 } else {
                     if status == 400, let message = try? JSONDecoder().decode(String.self, from: data) {
                         if message.contains("must be at least three characters") {
-                            completion(.failure(.tooShort(searchTerm)))
+                            completion(SearchResult(searchTerm: searchTerm, result: .failure(.tooShort)))
                         }
                     } else {
-                        completion(.failure(.any(searchTerm)))
+                        completion(SearchResult(searchTerm: searchTerm, result: .failure(.any)))
                     }
                 }
             case .failure:
-                completion(.failure(.any(searchTerm)))
+                completion(SearchResult(searchTerm: searchTerm, result: .failure(.any)))
             }
         }
     }

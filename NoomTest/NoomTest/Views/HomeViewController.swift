@@ -77,29 +77,15 @@ extension HomeViewController: UISearchResultsUpdating {
         DispatchQueue.global().async { [weak self] in
             self?.searchRequestPerformer.search(searchTerm) { result in
                 DispatchQueue.main.async {
-                    guard let currentText = self?.searchController.searchBar.text else { return }
-                    switch result {
-                    case .success(let result):
-                        guard result.searchTerm == currentText else { return }
-                        self?.listViewController.list = result.results
-                        self?.lastDisplayedSearch = result.searchTerm
+                    guard let currentText = self?.searchController.searchBar.text, result.searchTerm == currentText else { return }
+                    switch result.result {
+                    case .success(let foods):
+                        self?.listViewController.list = foods
                     case .failure(let error):
-                        switch error {
-                        case .any(let term):
-                            guard term == currentText else { return }
-                            self?.showError(error)
-                            self?.lastDisplayedSearch = term
-                        case .decode(let term):
-                            guard term == currentText else { return }
-                            self?.showError(error)
-                            self?.lastDisplayedSearch = term
-                        case .tooShort(let term):
-                            guard term == currentText else { return }
-                            self?.showError(error)
-                            self?.lastDisplayedSearch = term
-                        }
+                        self?.showError(error)
                         self?.listViewController.list = []
                     }
+                    self?.lastDisplayedSearch = result.searchTerm
                 }
             }
         }
