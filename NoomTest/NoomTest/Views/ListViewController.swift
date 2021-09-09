@@ -44,6 +44,11 @@ class ListViewController: UIViewController {
         ])
     }
     
+    override func viewDidLayoutSubviews() {
+        super.viewDidLayoutSubviews()
+        tableView.tableHeaderView?.frame = CGRect(x: 0, y: 0, width: tableView.bounds.width, height: 20)
+    }
+    
     func set(_ calories: Double) {
         caloriesHeader.set(calories)
     }

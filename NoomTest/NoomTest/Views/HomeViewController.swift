@@ -128,7 +128,7 @@ extension HomeViewController: UISearchResultsUpdating {
 
 extension HomeViewController: ListViewControllerDelegate {
     func listViewController(_ listViewController: ListViewController, didSelect food: Food) {
-        delegate?.homeViewController(self, didRequestShow: food)
+//        delegate?.homeViewController(self, didRequestShow: food)
         calories += food.caloriesPerPortion
         listViewController.set(calories)
     }
