@@ -44,8 +44,8 @@ class ListViewController: UIViewController {
         ])
     }
     
-    func add(_ calories: Double) {
-        caloriesHeader.add(calories)
+    func set(_ calories: Double) {
+        caloriesHeader.set(calories)
     }
 }
 

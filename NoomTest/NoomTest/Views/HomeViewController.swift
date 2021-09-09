@@ -44,6 +44,8 @@ class HomeViewController: UIViewController {
     
     private var lastDisplayedSearch: String = ""
     
+    private var calories: Double = 0
+    
     init(requestPerformer: SearchRequestPerformerProtocol = AFConsumer()) {
         searchRequestPerformer = requestPerformer
         super.init(nibName: nil, bundle: nil)
@@ -127,5 +129,7 @@ extension HomeViewController: UISearchResultsUpdating {
 extension HomeViewController: ListViewControllerDelegate {
     func listViewController(_ listViewController: ListViewController, didSelect food: Food) {
         delegate?.homeViewController(self, didRequestShow: food)
+        calories += food.caloriesPerPortion
+        listViewController.set(calories)
     }
 }

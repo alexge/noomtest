@@ -31,12 +31,6 @@ class CaloriesHeader: UIView {
         return sv
     }()
     
-    private var calories: Double = 0 {
-        didSet {
-            caloriesLabel.text = String(calories)
-        }
-    }
-    
     override init(frame: CGRect) {
         super.init(frame: frame)
         
@@ -54,7 +48,7 @@ class CaloriesHeader: UIView {
         fatalError("init(coder:) has not been implemented")
     }
     
-    func add(_ calories: Double) {
-        self.calories += calories
+    func set(_ calories: Double) {
+        caloriesLabel.text = String(calories)
     }
 }
