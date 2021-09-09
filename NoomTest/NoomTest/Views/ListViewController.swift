@@ -27,8 +27,11 @@ class ListViewController: UIViewController {
         tableView.dataSource = self
         tableView.delegate = self
         tableView.register(FoodTableViewCell.self, forCellReuseIdentifier: FoodTableViewCell.identifier)
+        tableView.tableHeaderView = caloriesHeader
         return tableView
     }()
+    
+    private var caloriesHeader = CaloriesHeader()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -41,6 +44,9 @@ class ListViewController: UIViewController {
         ])
     }
     
+    func add(_ calories: Double) {
+        caloriesHeader.add(calories)
+    }
 }
 
 extension ListViewController: UITableViewDelegate {
