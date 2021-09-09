@@ -7,7 +7,13 @@
 
 import UIKit
 
+protocol HomeViewControllerDelegate: AnyObject {
+    func homeViewController(_ homeViewController: HomeViewController, didRequestShow food: Food)
+}
+
 class HomeViewController: UIViewController {
+    
+    weak var delegate: HomeViewControllerDelegate?
     
     private let searchRequestPerformer: SearchRequestPerformerProtocol
     
@@ -22,6 +28,7 @@ class HomeViewController: UIViewController {
     }()
     
     private lazy var searchController: UISearchController = {
+        listViewController.delegate = self
         let search = UISearchController(searchResultsController: listViewController)
         search.searchResultsUpdater = self
         search.obscuresBackgroundDuringPresentation = false
@@ -106,5 +113,11 @@ extension HomeViewController: UISearchResultsUpdating {
         }
         message.addAction(action)
         present(message, animated: true, completion: nil)
+    }
+}
+
+extension HomeViewController: ListViewControllerDelegate {
+    func listViewController(_ listViewController: ListViewController, didSelect food: Food) {
+        delegate?.homeViewController(self, didRequestShow: food)
     }
 }

@@ -7,6 +7,10 @@
 
 import UIKit
 
+protocol ListViewControllerDelegate: AnyObject {
+    func listViewController(_ listViewController: ListViewController, didSelect food: Food)
+}
+
 class ListViewController: UIViewController {
     
     var list: [Food] = [] {
@@ -14,6 +18,8 @@ class ListViewController: UIViewController {
             tableView.reloadData()
         }
     }
+    
+    weak var delegate: ListViewControllerDelegate?
     
     private lazy var tableView: UITableView = {
         let tableView = UITableView()
@@ -39,7 +45,7 @@ class ListViewController: UIViewController {
 
 extension ListViewController: UITableViewDelegate {
     func tableView(_ tableView: UITableView, didSelectRowAt indexPath: IndexPath) {
-        
+        delegate?.listViewController(self, didSelect: list[indexPath.row])
     }
     
     func tableView(_ tableView: UITableView, heightForRowAt indexPath: IndexPath) -> CGFloat {

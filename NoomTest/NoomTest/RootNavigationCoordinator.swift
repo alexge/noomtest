@@ -7,13 +7,9 @@
 
 import UIKit
 
-protocol Coordinator: AnyObject {
-    var navigationCoordinator: UINavigationController { get }
-    func start()
-}
-
 class RootNavigationCoordinator: UIViewController {
     private var currentChild: UIViewController?
+    private var navigationCoordinator = UINavigationController()
     
     override func viewDidLoad() {
         super.viewDidLoad()
@@ -22,8 +18,9 @@ class RootNavigationCoordinator: UIViewController {
     
     private func showSearchList() {
         let home = HomeViewController()
-        let navigationController = UINavigationController(rootViewController: home)
-        show(child: navigationController)
+        home.delegate = self
+        navigationCoordinator.viewControllers = [home]
+        show(child: navigationCoordinator)
     }
     
     private func show(child: UIViewController) {
@@ -39,5 +36,11 @@ class RootNavigationCoordinator: UIViewController {
         child.didMove(toParent: self)
         currentChild = child
         view.backgroundColor = child.view.backgroundColor
+    }
+}
+
+extension RootNavigationCoordinator: HomeViewControllerDelegate {
+    func homeViewController(_ homeViewController: HomeViewController, didRequestShow food: Food) {
+//        navigationCoordinator.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
     }
 }
