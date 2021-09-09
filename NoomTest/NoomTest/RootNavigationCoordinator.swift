@@ -41,6 +41,10 @@ class RootNavigationCoordinator: UIViewController {
 
 extension RootNavigationCoordinator: HomeViewControllerDelegate {
     func homeViewController(_ homeViewController: HomeViewController, didRequestShow food: Food) {
-//        navigationCoordinator.pushViewController(<#T##viewController: UIViewController##UIViewController#>, animated: <#T##Bool#>)
+        let storyboard = UIStoryboard(name: FoodDetailViewController.identifier, bundle: .main)
+        guard let detailVC = storyboard.instantiateViewController(identifier: FoodDetailViewController.identifier) as? FoodDetailViewController else { return }
+        let _ = detailVC.view
+        detailVC.bind(food)
+        navigationCoordinator.pushViewController(detailVC, animated: true)
     }
 }
