@@ -20,6 +20,7 @@
 		C11170CF26E7D68A00316D0D /* FoodTableViewCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170CE26E7D68A00316D0D /* FoodTableViewCell.swift */; };
 		C11170D126E9874700316D0D /* FoodDetailViewController.swift in Sources */ = {isa = PBXBuildFile; fileRef = C11170D026E9874700316D0D /* FoodDetailViewController.swift */; };
 		C11170D326E9879800316D0D /* FoodDetailViewController.storyboard in Resources */ = {isa = PBXBuildFile; fileRef = C11170D226E9879800316D0D /* FoodDetailViewController.storyboard */; };
+		C151258426EA4984003CBE56 /* CaloriesHeader.swift in Sources */ = {isa = PBXBuildFile; fileRef = C151258326EA4984003CBE56 /* CaloriesHeader.swift */; };
 /* End PBXBuildFile section */
 
 /* Begin PBXFileReference section */
@@ -37,6 +38,7 @@
 		C11170CE26E7D68A00316D0D /* FoodTableViewCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodTableViewCell.swift; sourceTree = "<group>"; };
 		C11170D026E9874700316D0D /* FoodDetailViewController.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FoodDetailViewController.swift; sourceTree = "<group>"; };
 		C11170D226E9879800316D0D /* FoodDetailViewController.storyboard */ = {isa = PBXFileReference; lastKnownFileType = file.storyboard; path = FoodDetailViewController.storyboard; sourceTree = "<group>"; };
+		C151258326EA4984003CBE56 /* CaloriesHeader.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CaloriesHeader.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
 
 /* Begin PBXFrameworksBuildPhase section */
@@ -88,6 +90,7 @@
 			children = (
 				C11170B026E664B200316D0D /* HomeViewController.swift */,
 				C11170C226E77C5E00316D0D /* ListViewController.swift */,
+				C151258326EA4984003CBE56 /* CaloriesHeader.swift */,
 				C11170CE26E7D68A00316D0D /* FoodTableViewCell.swift */,
 				C11170D026E9874700316D0D /* FoodDetailViewController.swift */,
 				C11170D226E9879800316D0D /* FoodDetailViewController.storyboard */,
@@ -192,6 +195,7 @@
 				C11170CD26E79EDC00316D0D /* AFConsumer.swift in Sources */,
 				C11170AD26E664B200316D0D /* AppDelegate.swift in Sources */,
 				C11170C126E6A99000316D0D /* RootNavigationCoordinator.swift in Sources */,
+				C151258426EA4984003CBE56 /* CaloriesHeader.swift in Sources */,
 				C11170C326E77C5E00316D0D /* ListViewController.swift in Sources */,
 				C11170CF26E7D68A00316D0D /* FoodTableViewCell.swift in Sources */,
 				C11170AF26E664B200316D0D /* SceneDelegate.swift in Sources */,
