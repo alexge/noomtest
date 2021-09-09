@@ -71,7 +71,9 @@ class HomeViewController: UIViewController {
 
 extension HomeViewController: UISearchResultsUpdating {
     func updateSearchResults(for searchController: UISearchController) {
-        listViewController.list = []
+        if searchController.searchBar.text != lastDisplayedSearch {
+            listViewController.list = []
+        }
         searchTimer?.invalidate()
         guard let text = searchController.searchBar.text, text.isEmpty != true, text != lastDisplayedSearch else { return }
         
@@ -88,6 +90,9 @@ extension HomeViewController: UISearchResultsUpdating {
                     switch result.result {
                     case .success(let foods):
                         self?.listViewController.list = foods
+                        if foods.isEmpty {
+                            self?.showError(.emptyResults)
+                        }
                     case .failure(let error):
                         self?.showError(error)
                         self?.listViewController.list = []
@@ -107,6 +112,9 @@ extension HomeViewController: UISearchResultsUpdating {
         case .any, .decode:
             message.title = NSLocalizedString("UH OH", comment: "")
             message.message = NSLocalizedString("Something went WRONG", comment: "")
+        case .emptyResults:
+            message.title = NSLocalizedString("No results", comment: "")
+            message.message = NSLocalizedString("No results for this search, try something different", comment: "")
         }
         let action = UIAlertAction(title: NSLocalizedString("Close", comment: ""), style: .default) { [weak self] _ in
             self?.dismiss(animated: true, completion: nil)

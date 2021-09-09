@@ -18,7 +18,7 @@ protocol SearchRequestPerformerProtocol {
 }
 
 enum SearchError: Error {
-    case tooShort, any, decode
+    case tooShort, any, decode, emptyResults
 }
 
 class AFConsumer: SearchRequestPerformerProtocol {
